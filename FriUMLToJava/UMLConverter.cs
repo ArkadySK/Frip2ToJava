@@ -153,13 +153,21 @@ namespace FriUMLToJava
         #endregion
         #region Export
 
-        internal async Task WriteToJavaAsync(string solutionName, string outputFolder)
+        internal async Task WriteToJavaAsync(string solutionName, string outputFolder, bool overWrite)
         {
             // Folder that contains converted data
             var curOutputFolder = Path.Combine(outputFolder, solutionName);
 
-            if (Directory.Exists(curOutputFolder)) 
-                throw new Exception("Name conflict - choose different name!");
+            if (Directory.Exists(curOutputFolder))
+            {
+                if(overWrite)
+                    foreach (var file in Directory.GetFiles(outputFolder))
+                    {
+                        File.Delete(file);
+                    }
+                else
+                    throw new Exception("Name conflict - choose different name!");
+            }
             else
                 Directory.CreateDirectory(curOutputFolder);
 
