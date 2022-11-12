@@ -29,6 +29,7 @@ namespace FriUMLToJava
         private string _outputFolder = Path.Combine(Environment.CurrentDirectory, "Output");
         private UMLConverter _UMLConverter;
         private string _filePath = "";
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -72,7 +73,7 @@ namespace FriUMLToJava
             {
                 await _UMLConverter.ConvertFileAsync(_filePath);
                 filePathTextBox.Text = "Successfully converted!";
-                await _UMLConverter.WriteToJavaAsync(projectNameTextBox.Text, _outputFolder);
+                await _UMLConverter.WriteToJavaAsync(projectNameTextBox.Text, _outputFolder, overwriteCheckBox.IsChecked.Value);
             }
             catch (Exception ex)
             {

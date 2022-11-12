@@ -30,9 +30,14 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition MinWidth="200" Width="1.81*"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <TextBlock Text="Project name:" VerticalAlignment="Center"/>
             <TextBox x:Name="projectNameTextBox" MinHeight="24" Grid.Column="1"
                      BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+            <CheckBox x:Name="overwriteCheckBox" Grid.Row="1" Margin="0 4" Content="Overwrite data"/>
         </Grid>
         
         <!-- Bottom buttons -->
