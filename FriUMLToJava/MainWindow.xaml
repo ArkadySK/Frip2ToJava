@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FriUMLToJava"
         mc:Ignorable="d"
         FontSize="13"
-        Title="FRI UML To Java Converter" Height="200" Width="400">
+        Title="FRI UML To Java Converter" Height="250" Width="450">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
