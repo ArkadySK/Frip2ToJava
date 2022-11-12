@@ -1,0 +1,44 @@
+﻿<Window x:Class="FriUMLToJava.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FriUMLToJava"
+        mc:Ignorable="d"
+        FontSize="13"
+        Title="FRI UML To Java Converter" Height="200" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Drop file space -->
+        <TextBlock x:Name="filePathTextBox" Text="Drop your .frip2 file here" Margin="5"
+               FontStyle="Italic" FontSize="15" TextWrapping="Wrap" Padding="4"
+               AllowDrop="True" Drop="Border_Drop"
+               Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        <Button x:Name="openFileButton" Content="Browse..." HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8" Click="openFileButton_Click"/>
+        <Border BorderThickness="1" Margin="4"
+                AllowDrop="True" Drop="Border_Drop"
+                BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+        
+        <!-- Project name -->
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition MinWidth="200" Width="1.81*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Project name:" VerticalAlignment="Center"/>
+            <TextBox x:Name="projectNameTextBox" MinHeight="24" Grid.Column="1"
+                     BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+        </Grid>
+        
+        <!-- Bottom buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="convertButton" Content="Convert!" Margin="5" Width="120" Background="#FF7FE994" Click="convertButton_Click"/>
+            <Button x:Name="openConvertedFolderButton" Content="Open folder with converted files" Margin="5" Click="openConvertedFolderButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
