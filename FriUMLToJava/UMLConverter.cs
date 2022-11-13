@@ -158,6 +158,9 @@ namespace FriUMLToJava
             // Folder that contains converted data
             var curOutputFolder = Path.Combine(outputFolder, solutionName);
 
+            // Size of a tabulator 
+            var tab = "    ";
+
             if (Directory.Exists(curOutputFolder))
             {
                 if(overWrite)
@@ -192,7 +195,7 @@ namespace FriUMLToJava
                     if (!attribute.IsPublic)
                         accessibilityModifier = "private";
 
-                    writeTasks.Add(sw.WriteAsync("  " + accessibilityModifier + " " + attribute.Type + " " + attribute.Name + ";\n"));
+                    writeTasks.Add(sw.WriteAsync(tab + accessibilityModifier + " " + attribute.Type + " " + attribute.Name + ";\n"));
                 }
 
                 // Add new line
@@ -205,7 +208,7 @@ namespace FriUMLToJava
                     string accessibilityModifier = "public";
                     if (!operation.IsPublic)
                         accessibilityModifier = "private";
-                    writeTasks.Add(sw.WriteAsync("  " + accessibilityModifier + " "));
+                    writeTasks.Add(sw.WriteAsync(tab + accessibilityModifier + " "));
 
                     // Method's name and type
                     if (operation.Name.ToLower() == "new")
@@ -234,17 +237,17 @@ namespace FriUMLToJava
                         char firstChar = char.ToLower(returnVariable[0]);
                         returnVariable = returnVariable.Remove(0, 1);
                         returnVariable = firstChar + returnVariable;
-                        writeTasks.Add(sw.WriteAsync("      return this." + returnVariable + ";\n"));
+                        writeTasks.Add(sw.WriteAsync(tab + tab + "return this." + returnVariable + ";\n"));
                     }
                     // Assign setter
                     if (operation.Name.ToLower().StartsWith("set"))
                     {
-                        writeTasks.Add(sw.WriteAsync("      this." + operation.Parameters[0].Name + " = " + operation.Parameters[0].Name + ";\n"));
+                        writeTasks.Add(sw.WriteAsync(tab + tab + "this." + operation.Parameters[0].Name + " = " + operation.Parameters[0].Name + ";\n"));
                     }
 
 
                     // End method
-                    writeTasks.Add(sw.WriteAsync("  }\n\n"));
+                    writeTasks.Add(sw.WriteAsync(tab + "}\n\n"));
 
                 }
 
