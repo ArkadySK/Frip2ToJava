@@ -15,7 +15,7 @@ namespace FriUMLToJava
     /// </summary>
     internal class UMLConverter
     {
-        private readonly List<Class> _classes = new List<Class>();
+        public List<Class> Classes { get; set; } = new List<Class>();
 
         internal async Task ConvertFileAsync(string filePath) 
         {
@@ -57,7 +57,7 @@ namespace FriUMLToJava
                     var c = await Task.Run(() => LoadClass(classElementNode));
                     if (c is null) 
                         continue;
-                    _classes.Add(c);
+                    Classes.Add(c);
                     await Task.Delay(100);
 
                 }
@@ -175,7 +175,7 @@ namespace FriUMLToJava
             else
                 Directory.CreateDirectory(curOutputFolder);
 
-            foreach (Class c in _classes)
+            foreach (Class c in Classes)
             {
                 var classFileName = Path.Combine(curOutputFolder, c.Name) + ".java";
                 FileStream fs = new FileStream(classFileName, FileMode.Append, FileAccess.Write, FileShare.Write);
