@@ -153,13 +153,14 @@ namespace FriUMLToJava
         #endregion
         #region Export
 
+        // Size of a tabulator 
+        private readonly string _tab = "    ";
         internal async Task WriteToJavaAsync(string solutionName, string outputFolder, bool overWrite)
         {
             // Folder that contains converted data
             var curOutputFolder = Path.Combine(outputFolder, solutionName);
 
-            // Size of a tabulator 
-            var tab = "    ";
+            
 
             if (Directory.Exists(curOutputFolder))
             {
@@ -195,7 +196,7 @@ namespace FriUMLToJava
                     if (!attribute.IsPublic)
                         accessibilityModifier = "private";
 
-                    writeTasks.Add(sw.WriteAsync(tab + accessibilityModifier + " " + attribute.Type + " " + attribute.Name + ";\n"));
+                    writeTasks.Add(sw.WriteAsync(_tab + accessibilityModifier + " " + attribute.Type + " " + attribute.Name + ";\n"));
                 }
 
                 // Add new line
@@ -208,7 +209,7 @@ namespace FriUMLToJava
                     string accessibilityModifier = "public";
                     if (!operation.IsPublic)
                         accessibilityModifier = "private";
-                    writeTasks.Add(sw.WriteAsync(tab + accessibilityModifier + " "));
+                    writeTasks.Add(sw.WriteAsync(_tab + accessibilityModifier + " "));
 
                     // Method's name and type
                     if (operation.Name.ToLower() == "new")
@@ -237,17 +238,17 @@ namespace FriUMLToJava
                         char firstChar = char.ToLower(returnVariable[0]);
                         returnVariable = returnVariable.Remove(0, 1);
                         returnVariable = firstChar + returnVariable;
-                        writeTasks.Add(sw.WriteAsync(tab + tab + "return this." + returnVariable + ";\n"));
+                        writeTasks.Add(sw.WriteAsync(_tab + _tab + "return this." + returnVariable + ";\n"));
                     }
                     // Assign setter
                     if (operation.Name.ToLower().StartsWith("set"))
                     {
-                        writeTasks.Add(sw.WriteAsync(tab + tab + "this." + operation.Parameters[0].Name + " = " + operation.Parameters[0].Name + ";\n"));
+                        writeTasks.Add(sw.WriteAsync(_tab + _tab + "this." + operation.Parameters[0].Name + " = " + operation.Parameters[0].Name + ";\n"));
                     }
 
 
                     // End method
-                    writeTasks.Add(sw.WriteAsync(tab + "}\n\n"));
+                    writeTasks.Add(sw.WriteAsync(_tab + "}\n\n"));
 
                 }
 
@@ -269,7 +270,7 @@ namespace FriUMLToJava
             {
                 if (classAttributes.Find(x => x.Name == parameter.Name && x.Type == parameter.Type) != null)
                 {
-                    writeTasks.Add(sw.WriteAsync("      this." + parameter.Name + " = " + parameter.Name + ";\n"));
+                    writeTasks.Add(sw.WriteAsync(_tab + _tab + "this." + parameter.Name + " = " + parameter.Name + ";\n"));
                     var aa = notFoundAttributes.Find(x => x.Name == parameter.Name && x.Type == parameter.Type);
                     if (aa is null)
                         continue;
@@ -282,13 +283,13 @@ namespace FriUMLToJava
                 string[] numberTypes = { "int", "Integer", "double", "Double", "float", "Float" };
 
                 if (numberTypes.Contains(attribute.Type))
-                    writeTasks.Add(sw.WriteAsync("      this." + attribute.Name + " = 0;\n"));
+                    writeTasks.Add(sw.WriteAsync(_tab + _tab + "this." + attribute.Name + " = 0;\n"));
                 else if (attribute.Type.ToLower() == "string")
-                    writeTasks.Add(sw.WriteAsync("      this." + attribute.Name + " = \"\";\n"));
+                    writeTasks.Add(sw.WriteAsync(_tab + _tab + "this." + attribute.Name + " = \"\";\n"));
                 else if (attribute.Type.ToLower() == "boolean")
-                    writeTasks.Add(sw.WriteAsync("      this." + attribute.Name + " = false;\n"));
+                    writeTasks.Add(sw.WriteAsync(_tab + _tab + "this." + attribute.Name + " = false;\n"));
                 else
-                    writeTasks.Add(sw.WriteAsync("      this." + attribute.Name + " = new " + attribute.Type + "();\n"));
+                    writeTasks.Add(sw.WriteAsync(_tab + _tab + "this." + attribute.Name + " = new " + attribute.Type + "();\n"));
 
             }
             await Task.WhenAll(writeTasks);
