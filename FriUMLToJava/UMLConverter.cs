@@ -234,12 +234,12 @@ namespace FriUMLToJava
                         char firstChar = char.ToLower(returnVariable[0]);
                         returnVariable = returnVariable.Remove(0, 1);
                         returnVariable = firstChar + returnVariable;
-                        writeTasks.Add(sw.WriteAsync("      return this." + returnVariable + ";"));
+                        writeTasks.Add(sw.WriteAsync("      return this." + returnVariable + ";\n"));
                     }
                     // Assign setter
                     if (operation.Name.ToLower().StartsWith("set"))
                     {
-                        writeTasks.Add(sw.WriteAsync("      this." + operation.Parameters[0].Name + " = " + operation.Parameters[0].Name + ";"));
+                        writeTasks.Add(sw.WriteAsync("      this." + operation.Parameters[0].Name + " = " + operation.Parameters[0].Name + ";\n"));
                     }
 
 
