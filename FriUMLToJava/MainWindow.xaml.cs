@@ -45,7 +45,14 @@ namespace FriUMLToJava
             projectNameTextBox.Text = Path.GetFileNameWithoutExtension(filePath);
         }
 
-        private void openFileButton_Click(object sender, RoutedEventArgs e)
+        private async Task PreloadClassesAsync()
+        {
+            _UMLConverter = new UMLConverter();
+            DataContext = _UMLConverter;
+            await _UMLConverter.ConvertFileAsync(_filePath);
+        }
+
+        private async void openFileButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.DefaultExt = ".xml"; 
@@ -57,6 +64,7 @@ namespace FriUMLToJava
             string file = dialog.FileName;
 
             UpdateFileSelection(file);
+            await PreloadClassesAsync();
         }
 
         private async void convertButton_Click(object sender, RoutedEventArgs e)
@@ -66,14 +74,12 @@ namespace FriUMLToJava
                 MessageBox.Show("Please select a file!", "Cannot convert file", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            _UMLConverter = new UMLConverter();
 
             filePathTextBox.Text = "Conversion started...";
             try
             {
-                await _UMLConverter.ConvertFileAsync(_filePath);
-                filePathTextBox.Text = "Successfully converted!";
                 await _UMLConverter.WriteToJavaAsync(projectNameTextBox.Text, _outputFolder, overwriteCheckBox.IsChecked.Value);
+                filePathTextBox.Text = "Successfully converted!";
             }
             catch (Exception ex)
             {
@@ -94,7 +100,7 @@ namespace FriUMLToJava
                 Process.Start("explorer", _outputFolder + Path.DirectorySeparatorChar);
         }
 
-        private void Border_Drop(object sender, DragEventArgs e)
+        private async void Border_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -104,6 +110,8 @@ namespace FriUMLToJava
 
                 UpdateFileSelection(file);
             }
+            await PreloadClassesAsync();
+
         }
     }
 }

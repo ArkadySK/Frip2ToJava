@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:FriUMLToJava"
         mc:Ignorable="d"
         FontSize="13"
-        Title="FRI UML To Java Converter" Height="250" Width="450">
+        Title="FRI UML To Java Converter" Width="400" SizeToContent="Height">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <!-- Drop file space -->
-        <TextBlock x:Name="filePathTextBox" Text="Drop your .frip2 file here" Margin="5"
+        <TextBlock x:Name="filePathTextBox" Text="Drop your .frip2 file here" Margin="5" MinHeight="100"
                FontStyle="Italic" FontSize="15" TextWrapping="Wrap" Padding="4"
                AllowDrop="True" Drop="Border_Drop"
                Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
@@ -24,7 +24,7 @@
                 AllowDrop="True" Drop="Border_Drop"
                 BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
         
-        <!-- Project name -->
+        <!-- Project properties -->
         <Grid Grid.Row="1" Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -33,11 +33,25 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Project name:" VerticalAlignment="Center"/>
-            <TextBox x:Name="projectNameTextBox" MinHeight="24" Grid.Column="1"
+
+            <!-- Classes overview -->
+            <StackPanel Grid.ColumnSpan="2" Margin="0 5">
+                <TextBlock Text="Classes:"/>
+                <ListView MinHeight="40" ItemsSource="{Binding Classes}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Description}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+            
+            <TextBlock Grid.Row="1" Text="Project name:" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" x:Name="projectNameTextBox" MinHeight="24" Grid.Column="1"
                      BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
-            <CheckBox x:Name="overwriteCheckBox" Grid.Row="1" Margin="0 4" Content="Overwrite data"/>
+            <CheckBox x:Name="overwriteCheckBox" Grid.Row="2" Margin="0 4" Content="Overwrite data"/>
         </Grid>
         
         <!-- Bottom buttons -->
