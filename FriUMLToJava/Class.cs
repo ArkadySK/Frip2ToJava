@@ -31,6 +31,15 @@ namespace FriUMLToJava
         public List<Attribute> Attributes { get; set; } = new List<Attribute>();
         public List<Operation> Operations { get; set; } = new List<Operation>();
 
+        // Ignore class when converting
+        public bool IsIgnored { get; set; } = false;
+
+        public string Description
+        {
+            get
+                => this.Name + " (Attributes: " + this.Attributes.Count + ", Operations: " + this.Operations.Count + ")";
+        }
+
         public Class(string name)
         {
             Name = name;
