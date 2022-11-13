@@ -165,7 +165,7 @@ namespace FriUMLToJava
             if (Directory.Exists(curOutputFolder))
             {
                 if(overWrite)
-                    foreach (var file in Directory.GetFiles(outputFolder))
+                    foreach (var file in Directory.GetFiles(curOutputFolder))
                     {
                         File.Delete(file);
                     }
