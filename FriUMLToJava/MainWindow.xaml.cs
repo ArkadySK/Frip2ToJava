@@ -40,7 +40,7 @@ namespace FriUMLToJava
         
         private void UpdateFileSelection(string filePath)
         {
-            filePathTextBox.Text = "Loaded file:\n" + filePath;
+            filePathTextBox.Text = "Loading...";
             _filePath = filePath;
             projectNameTextBox.Text = Path.GetFileNameWithoutExtension(filePath);
         }
@@ -48,8 +48,10 @@ namespace FriUMLToJava
         private async Task PreloadClassesAsync()
         {
             _UMLConverter = new UMLConverter();
-            DataContext = _UMLConverter;
             await _UMLConverter.ConvertFileAsync(_filePath);
+            await Task.Delay(TimeSpan.FromSeconds(0.5));
+            DataContext = _UMLConverter;
+            filePathTextBox.Text = "Loaded file:\n" + _filePath;
         }
 
         private async void openFileButton_Click(object sender, RoutedEventArgs e)

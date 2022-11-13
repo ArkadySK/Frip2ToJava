@@ -10,7 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
@@ -31,7 +31,7 @@
                 <ColumnDefinition MinWidth="200" Width="1.81*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -39,7 +39,8 @@
             <!-- Classes overview -->
             <StackPanel Grid.ColumnSpan="2" Margin="0 5">
                 <TextBlock Text="Classes:"/>
-                <ListView MinHeight="40" ItemsSource="{Binding Classes}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                <ListView Height="100" ItemsSource="{Binding Classes}" d:ItemsSource="{d:SampleData ItemCount=5}" 
+                          ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Description}"/>
