@@ -288,6 +288,8 @@ namespace FriUMLToJava
                     writeTasks.Add(sw.WriteAsync(_tab + _tab + "this." + attribute.Name + " = \"\";\n"));
                 else if (attribute.Type.ToLower() == "boolean")
                     writeTasks.Add(sw.WriteAsync(_tab + _tab + "this." + attribute.Name + " = false;\n"));
+                else if(attribute.Type.Contains("[]"))
+                    writeTasks.Add(sw.WriteAsync(_tab + _tab + "this." + attribute.Name + " = new " + attribute.Type + " {};\n"));                
                 else
                     writeTasks.Add(sw.WriteAsync(_tab + _tab + "this." + attribute.Name + " = new " + attribute.Type + "();\n"));
 
